@@ -2,6 +2,7 @@ package com.example.LearnSpring.learnSpring.Service;
 
 import com.example.LearnSpring.learnSpring.DTO.CategoryDTO;
 import com.example.LearnSpring.learnSpring.DTO.ProductDTO;
+import com.example.LearnSpring.learnSpring.Exception.categoryNotFoundException;
 import com.example.LearnSpring.learnSpring.Mapper.CategoryMapper;
 import com.example.LearnSpring.learnSpring.Mapper.ProductMapper;
 import com.example.LearnSpring.learnSpring.Repository.CategoryRepository;
@@ -24,7 +25,7 @@ public class ProductService {
     }
 
     public ProductDTO createProduct(ProductDTO productDTO){
-       Category category =  categoryRepository.findById(productDTO.getCategory_id()).orElseThrow(() -> new RuntimeException("Category Not Found"));
+       Category category =  categoryRepository.findById(productDTO.getCategory_id()).orElseThrow(() -> new categoryNotFoundException("Category Not Found"));
 
         Product product = ProductMapper.toProductEntity(productDTO, category );
         product = productRepository.save(product);
